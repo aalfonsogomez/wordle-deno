@@ -1,11 +1,15 @@
 import {bold, white, bgGreen, bgYellow, bgBrightBlack } from 'https://deno.land/std@0.151.0/fmt/colors.ts';
 
 const MAX_TRIES = 6;
+const POKEMONS_AVAILABRE = 850;
 const previousGuesses: Array<string> = [];
 
-let globalResults = '';
+const randomId = Math.floor(Math.random() * POKEMONS_AVAILABRE) + 1;
+const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`)
+    .then(res => res.json())
+    .then(response => response.name.toLowerCase());
 
-const pokemon = 'pikachu';
+let globalResults = '';
 
 function askWord () {
     const response = prompt('The Pokemon is...');
@@ -80,4 +84,6 @@ function start (tries: number) {
 
 }
 
+console.log(`Welcome to Pokedle! You have ${MAX_TRIES} tries to guess the pokemon name`);
+console.log(`The pokemon name is ${pokemon.length} letters long`);
 start(0);
