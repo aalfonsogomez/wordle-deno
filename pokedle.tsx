@@ -1,4 +1,5 @@
-import {bold, white, bgGreen, bgYellow, bgBrightBlack } from 'https://deno.land/std@0.151.0/fmt/colors.ts';
+
+import  { colorLetter }  from  './colors.ts';
 
 const MAX_TRIES = 6;
 const POKEMONS_AVAILABRE = 850;
@@ -24,18 +25,6 @@ function askWord () {
     }
 
     return {response};
-}
-
-const colorMethods = {
-    green: bgGreen,
-    yellow: bgYellow,
-    gray: bgBrightBlack
-}
-
-function colorLetter (color: 'green' | 'yellow' | 'gray', letter: string) {
-    const bg = colorMethods[color];
-    const colorizeLetter = bg(bold(` ${white(letter)} `));
-    return ` ${colorizeLetter} `;
 }
 
 function print(guess: string) {
