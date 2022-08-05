@@ -20,16 +20,40 @@ function askWord () {
     return {response};
 }
 
-let guess = '';
-let tries = 0;
-
-while (guess === '') {
-    const { error, response } = askWord();
-    if (error) {
-        console.error(error);
-        continue;
-    }
-    if (response) guess = response;
+function print() {
+    console.log(`You guessed the pokemon! It was ${pokemon}`);
 }
 
-console.log(guess);
+let tries = 0;
+
+function start (tries: number) {
+    const length = pokemon.length;
+    if (tries >= MAX_TRIES) {
+        console.log(`You have run out of tries. The pokemon was ${pokemon}`);
+        return;
+    }
+
+    let guess = '';
+    while (guess === '') {
+        const { error, response } = askWord();
+        if (error) {
+            console.error(error);
+            continue;
+        }
+        if (response) guess = response;
+    }
+
+    if (guess === pokemon) {
+        print(guess);
+        console.log('🎈 You win! 🎈');
+        return;
+    } else {
+        print(guess);
+        console.log(`You have ${MAX_TRIES - tries} tries left`);
+        tries++;
+        start(tries);
+    }
+
+}
+
+start(0);
