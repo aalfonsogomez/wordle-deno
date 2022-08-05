@@ -1,3 +1,5 @@
+import {bold, white, bgGreen, bgYellow, bgBrightBlack } from 'https://deno.land/std@0.151.0/fmt/colors.ts';
+
 const MAX_TRIES = 6;
 const previousGuesses: Array<string> = [];
 
@@ -20,14 +22,24 @@ function askWord () {
     return {response};
 }
 
-function print() {
-    console.log(`You guessed the pokemon! It was ${pokemon}`);
+function print(guess: string) {
+    console.clear();
+    let results = '';
+    const letters: Array<string> = [...guess];
+    letters.forEach((letter, index) => {
+        if (letter === pokemon[index]) {
+            results += bgGreen(bold(white(letter)));
+        } else if (pokemon.includes(letter)) {
+            results += bgYellow(white(letter));
+        } else {
+            results += bgBrightBlack(white(letter));
+        }
+    });
+    globalResults += `${results}\n\n`
+    console.log(globalResults);
 }
 
-let tries = 0;
-
 function start (tries: number) {
-    const length = pokemon.length;
     if (tries >= MAX_TRIES) {
         console.log(`You have run out of tries. The pokemon was ${pokemon}`);
         return;
