@@ -22,17 +22,29 @@ function askWord () {
     return {response};
 }
 
+const colorMethods = {
+    green: bgGreen,
+    yellow: bgYellow,
+    gray: bgBrightBlack
+}
+
+function colorLetter (color: 'green' | 'yellow' | 'gray', letter: string) {
+    const bg = colorMethods[color];
+    const colorizeLetter = bg(bold(` ${white(letter)} `));
+    return ` ${colorizeLetter} `;
+}
+
 function print(guess: string) {
     console.clear();
     let results = '';
     const letters: Array<string> = [...guess];
     letters.forEach((letter, index) => {
         if (letter === pokemon[index]) {
-            results += bgGreen(bold(white(letter)));
+            results += colorLetter('green', letter);
         } else if (pokemon.includes(letter)) {
-            results += bgYellow(white(letter));
+            results += colorLetter('yellow', letter);
         } else {
-            results += bgBrightBlack(white(letter));
+            results += colorLetter('gray', letter);
         }
     });
     globalResults += `${results}\n\n`
